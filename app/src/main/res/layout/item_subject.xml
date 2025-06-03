@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="8dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="8dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/subjectItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:animateLayoutChanges="true">
+
+        <!-- Subject Title Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:id="@+id/tvSubjectTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#082A61"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <!-- Optional: Expand/Collapse Icon -->
+
+        </LinearLayout>
+
+        <!-- Expandable Layout -->
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="12dp"
+            android:background="#E6EAEF"
+            android:elevation="2dp"
+            android:layout_marginTop="8dp"
+            android:animateLayoutChanges="true">
+
+            <!-- Example Inner Content -->
+            <TextView
+                android:id="@+id/tvDeptName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Department: BCA"
+                android:textSize="14sp"
+                android:textColor="#00BCD4" />
+
+            <TextView
+                android:id="@+id/tvSemester"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Semester: 4"
+                android:textSize="14sp"
+                android:textColor="#2196F3"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/facultyCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    card_view:cardCornerRadius="20dp"
+    card_view:cardElevation="10dp"
+    card_view:cardBackgroundColor="#FFFFFF"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@drawable/blue_card_background"
+android:padding="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvFacultyId"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="ID: 1024"
+            android:textSize="14sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Gender: Female"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:gravity="end" />
+    </LinearLayout>
+<TextView
+    android:id="@+id/tvFacultyName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Dr. Jane Smith"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    android:layout_marginTop="10dp"
+    android:textColor="#FFFFFF" />
+
+<TextView
+    android:id="@+id/tvEmail"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="jane.smith@example.com"
+    android:textSize="15sp"
+    android:textColor="#FFFFFF"
+    android:layout_marginTop="6dp" />
+
+
+
+</LinearLayout>
+
+    </androidx.cardview.widget.CardView>
