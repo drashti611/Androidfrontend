@@ -10,8 +10,6 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
-
-
     <!-- Card View for Login Form -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -25,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
             <!-- Logo with Circular Background -->
             <ImageView
                 android:layout_width="100dp"
@@ -47,6 +46,7 @@
                 android:gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp" />
+
             <EditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -60,17 +60,39 @@
                 android:textColorHint="#888888"
                 android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/etPassword"
+            <!-- Password EditText with Toggle -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Password"
-                android:drawablePadding="12dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_input"
                 android:paddingLeft="16dp"
-                android:textColor="#333333"
-                android:textColorHint="#888888"
-                android:inputType="textPassword" />
+                android:paddingRight="16dp">
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/ivTogglePassword"
+                    android:hint="Password"
+                    android:textColor="#333333"
+                    android:textColorHint="#888888"
+                    android:inputType="textPassword"
+                    android:background="@android:color/transparent"
+                    android:paddingRight="40dp" />
+
+                <ImageView
+                    android:id="@+id/ivTogglePassword"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_visibility_off"
+                    android:contentDescription="Toggle Password Visibility"
+                    android:padding="5dp"
+                    app:tint="#888888" />
+            </RelativeLayout>
 
             <!-- Login Button -->
             <Button
@@ -83,6 +105,7 @@
                 android:textSize="18sp"
                 android:backgroundTint="#1E90FF"
                 android:elevation="3dp" />
+
             <!-- Forgot Password and Sign Up Links -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,6 +136,4 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
 </LinearLayout>
-

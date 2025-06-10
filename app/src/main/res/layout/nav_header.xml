@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E8F0FE"
+    android:padding="20dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:elevation="6dp"
+    android:clipToPadding="false">
+
+<androidx.cardview.widget.CardView
+android:layout_width="88dp"
+android:layout_height="88dp"
+app:cardCornerRadius="44dp"
+app:cardElevation="8dp"
+android:layout_gravity="center_vertical">
+
+<ImageView
+    android:id="@+id/universityLogo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerInside"
+    android:contentDescription="University Logo"
+    android:src="@drawable/logo" />
+</androidx.cardview.widget.CardView>
+
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical"
+android:layout_marginStart="24dp"
+android:gravity="center_vertical">
+
+<TextView
+    android:id="@+id/nav_header_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Campus Wave"
+    android:textColor="#1A237E"
+android:textSize="28sp"
+android:textStyle="bold"
+android:fontFamily="sans-serif-medium"
+android:letterSpacing="0.08" />
+
+<TextView
+    android:id="@+id/nav_header_subtitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Empowering Education"
+    android:textColor="#3949AB"
+android:textSize="14sp"
+android:fontFamily="sans-serif"
+android:letterSpacing="0.05"
+android:layout_marginTop="6dp" />
+</LinearLayout>
+
+    </LinearLayout>

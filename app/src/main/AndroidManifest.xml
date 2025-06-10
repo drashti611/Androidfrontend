@@ -19,8 +19,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".LoginSuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login_success_activity"
+            android:exported="false" />
+        <activity
             android:name=".activity_splashscreen"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,8 +65,7 @@
             tools:replace="android:theme" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
     </application>
 
 </manifest>

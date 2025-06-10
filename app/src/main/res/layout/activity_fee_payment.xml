@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E3F2FD">
+    android:layout_height="match_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E3F2FD"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/lottieContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="#E3F2FD">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieSplash"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:lottie_rawRes="@raw/fees_lottie"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/subjectLayoutt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="#E3F2FD">
+            <!-- Toolbar -->
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -163,3 +194,5 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

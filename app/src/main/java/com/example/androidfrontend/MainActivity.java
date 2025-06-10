@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
+    private ImageView ivTogglePassword;
+    private boolean isPasswordVisible = false;
     private ProgressDialog progressDialog;
 
     @Override
@@ -40,9 +45,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        ivTogglePassword = findViewById(R.id.ivTogglePassword);
+
+        ivTogglePassword.setOnClickListener(view -> {
+            if (isPasswordVisible) {
+                // Hide password
+                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                ivTogglePassword.setImageResource(R.drawable.icon_visibility_off);
+                isPasswordVisible = false;
+            } else {
+                // Show password
+                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                ivTogglePassword.setImageResource(R.drawable.icon_visibility);
+                isPasswordVisible = true;
+            }
+            // Move cursor to the end of text
+            etPassword.setSelection(etPassword.getText().length());
+        });
 
         btnLogin.setOnClickListener(view -> {
             String email = etEmail.getText().toString().trim();
@@ -85,7 +108,10 @@ public class MainActivity extends AppCompatActivity {
                     sharedPrefManager.saveLoginData(token, studentId, studentName);
 
                     // Show success alert with navigation
-                    showAlert("Success", "Login Successful", true);
+//                    showAlert("Success", "Login Successful", true);
+                    startActivity(new Intent(MainActivity.this, Dashboard.class));
+                    finish();
+
 
                 } else {
                     showAlert("Login Failed", "Invalid Email or Password.", false);

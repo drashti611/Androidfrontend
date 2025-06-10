@@ -7,28 +7,46 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import com.google.android.material.navigation.NavigationView;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private GridLayout mainGrid;
-    private CardView logoutCard;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         SharedPrefManager sharedPrefManager = new SharedPrefManager(this);
         String studentName = sharedPrefManager.getStudentName();
@@ -42,7 +60,6 @@ public class Dashboard extends AppCompatActivity {
         }
 
         mainGrid = findViewById(R.id.mainGrid);
-//        logoutCard = findViewById(R.id.card_logout); // Make sure this is defined in XML layout
 
         // Grid card click listeners
         CardView profile = (CardView) mainGrid.getChildAt(0);
@@ -58,10 +75,6 @@ public class Dashboard extends AppCompatActivity {
         if (teachers != null) teachers.setOnClickListener(v -> startActivity(new Intent(this, Teachers.class)));
         if (notifications != null) notifications.setOnClickListener(v -> startActivity(new Intent(this, Notification.class)));
         if (material != null) material.setOnClickListener(v -> startActivity(new Intent(this, content.class)));
-
-        if (logoutCard != null) {
-            logoutCard.setOnClickListener(view -> showLogoutConfirmation());
-        }
     }
 
     private void showLogoutConfirmation() {
@@ -116,5 +129,39 @@ public class Dashboard extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle drawer item clicks here
+        int id = item.getItemId();
+
+        if (id == R.id.nav_profile) {
+            startActivity(new Intent(this, profile.class));
+        } else if (id == R.id.nav_subjects) {
+            startActivity(new Intent(this, subjects.class));
+        } else if (id == R.id.nav_fees) {
+            startActivity(new Intent(this, FeePaymentActivity.class));
+        } else if (id == R.id.nav_teachers) {
+            startActivity(new Intent(this, Teachers.class));
+        } else if (id == R.id.nav_notifications) {
+            startActivity(new Intent(this, Notification.class));
+        } else if (id == R.id.nav_material) {
+            startActivity(new Intent(this, content.class));
+        } else if (id == R.id.nav_logout) {
+            showLogoutConfirmation();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

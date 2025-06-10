@@ -2,9 +2,11 @@ package com.example.androidfrontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ public class profile extends AppCompatActivity {
     // UI components
     private TextView studentName, studentDOB, studentGender, studentEmail, studentPhone,
             studentAddress, studentCityState, studentDepartment, studentCurrentSemester,
-            studentGroupId, studentTenthSchool, studentTenthYear, studentTenthPercentage,
+            studentTenthSchool, studentTenthYear, studentTenthPercentage,
             studentTwelfthSchool, studentTwelfthYear, studentTwelfthPercentage;
 
     private ImageView studentImage;
@@ -37,20 +39,28 @@ public class profile extends AppCompatActivity {
     private ApiService apiService;
     private int studentId;
 
+    private LinearLayout lottieContainer, profileLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Find Lottie and profile layout containers
+        lottieContainer = findViewById(R.id.lottieContainer);
+        profileLayout = findViewById(R.id.profileLayout);
+
+        // Initially show Lottie, hide profile
+        lottieContainer.setVisibility(View.VISIBLE);
+        profileLayout.setVisibility(View.GONE);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        // Bind UI views
+        // Bind UI views inside profile layout
         studentName = findViewById(R.id.studentName);
         studentDOB = findViewById(R.id.studentDOB);
         studentGender = findViewById(R.id.studentGender);
@@ -76,12 +86,20 @@ public class profile extends AppCompatActivity {
 
         Log.d("ProfileActivity", "StudentId: " + studentId);
 
-        if (studentId != -1) {
+        if (studentId == -1) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Show Lottie for 2.5 seconds then show profile and fetch data
+        new Handler().postDelayed(() -> {
+            lottieContainer.setVisibility(View.GONE);
+            profileLayout.setVisibility(View.VISIBLE);
+
             apiService = ApiClient.getApiService();
             fetchStudentData(studentId);
-        } else {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
-        }
+
+        }, 2500); // delay in ms (2.5 sec)
     }
 
     private void fetchStudentData(int studentId) {

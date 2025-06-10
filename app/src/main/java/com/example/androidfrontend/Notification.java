@@ -1,20 +1,21 @@
 package com.example.androidfrontend;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.app.AlertDialog;
 import android.widget.Toast;
+import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.androidfrontend.Api.ApiClient;
 import com.example.androidfrontend.Api.ApiService;
 import com.example.androidfrontend.Model.NotificationModel;
-import com.example.androidfrontend.Api.JwtUtils;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -28,37 +29,45 @@ public class Notification extends AppCompatActivity {
     private TextView notificationTextView;
     private int studentId;
 
+    private LinearLayout lottieLayout, mainContentLayout;
+    private LottieAnimationView lottieNotification;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Enable back button in toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Notification");
         }
-
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        // Initialize Views
+        lottieLayout = findViewById(R.id.lottieLayout);
+        mainContentLayout = findViewById(R.id.mainContentLayout);
+        lottieNotification = findViewById(R.id.lottieNotification);
         notificationTextView = findViewById(R.id.notificationTextView);
 
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-         studentId = prefs.getInt("studentId", -1);
+        // Show only Lottie initially
+        lottieLayout.setVisibility(LinearLayout.VISIBLE);
+        mainContentLayout.setVisibility(LinearLayout.GONE);
 
-        Log.d("STUDENT_ID", "Fetched studentId: " + studentId);
+        // Get studentId from shared preferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        studentId = prefs.getInt("studentId", -1);
 
         if (studentId == -1) {
             Toast.makeText(this, "Student ID not found. Please login.", Toast.LENGTH_LONG).show();
             return;
         }
 
-
-
-        fetchNotifications(studentId);
+        // Delay the data loading by 2 seconds to show the animation
+        new Handler().postDelayed(() -> {
+            fetchNotifications(studentId);
+        }, 2000);
     }
 
     private void fetchNotifications(int studentId) {
@@ -68,6 +77,10 @@ public class Notification extends AppCompatActivity {
         call.enqueue(new Callback<List<NotificationModel>>() {
             @Override
             public void onResponse(Call<List<NotificationModel>> call, Response<List<NotificationModel>> response) {
+                // Hide Lottie and show content
+                lottieLayout.setVisibility(LinearLayout.GONE);
+                mainContentLayout.setVisibility(LinearLayout.VISIBLE);
+
                 if (response.isSuccessful() && response.body() != null) {
                     List<NotificationModel> notifications = response.body();
                     Log.d("NOTIFICATION_API", "Response: " + new Gson().toJson(response.body()));
@@ -78,12 +91,14 @@ public class Notification extends AppCompatActivity {
                         notificationTextView.setText("No new notifications.");
                     }
                 } else {
-                    notificationTextView.setText("Failed to fetch notifications");
+                    notificationTextView.setText("Failed to fetch notifications.");
                 }
             }
 
             @Override
             public void onFailure(Call<List<NotificationModel>> call, Throwable t) {
+                lottieLayout.setVisibility(LinearLayout.GONE);
+                mainContentLayout.setVisibility(LinearLayout.VISIBLE);
                 notificationTextView.setText("Error: " + t.getMessage());
             }
         });
